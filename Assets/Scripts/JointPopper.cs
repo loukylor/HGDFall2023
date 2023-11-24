@@ -11,6 +11,11 @@ namespace HGDFall2023 {
             if (joint is not RelativeJoint2D relativeJoint)
                 return;
 
+            Debug.Log(
+                $"{joint.name} broke; torque {joint.reactionTorque};" +
+                $"force {joint.reactionForce}"
+            );
+
             relativeJoint.maxTorque = brokenJointTorque;
         }
     }
