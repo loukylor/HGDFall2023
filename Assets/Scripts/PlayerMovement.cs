@@ -17,7 +17,7 @@ namespace HGDFall2023
         public PhysicsMaterial2D forwardLegMaterial;
         public PhysicsMaterial2D backLegMaterial;
 
-        public void Update()
+        private void Update()
         {
             // Shuffle legs forward and back
             if (Input.GetKey(KeyCode.W)) 
