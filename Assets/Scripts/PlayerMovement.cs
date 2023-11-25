@@ -89,8 +89,8 @@ namespace HGDFall2023
 
             if (Mathf.Abs(forwardLeg.angularOffset + speed) <= maxLegAngle)
             {
-                forwardLeg.angularOffset += speed;
-                forwardLeg.correctionScale = 0.3f;
+                forwardLeg.angularOffset += speed * 1.5f;
+                forwardLeg.correctionScale = 0.4f;
                 // Give forward leg a slight advantage in friction to make
                 // walking faster
                 forwardKnee.connectedBody.sharedMaterial = forwardLegMaterial;
