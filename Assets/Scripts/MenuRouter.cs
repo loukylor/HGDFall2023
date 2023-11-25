@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace HGDFall2023
 {
@@ -46,6 +47,11 @@ namespace HGDFall2023
                 // Or the main menu if there is nothing in the stack
                 OpenMenu("MainMenu");
             }
+        }
+
+        public void LoadLevel(int level)
+        {
+            SceneManager.LoadScene($"Level{level}");
         }
     }
 }
