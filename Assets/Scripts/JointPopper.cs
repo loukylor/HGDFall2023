@@ -1,6 +1,7 @@
 using UnityEngine;
 
-namespace HGDFall2023 {
+namespace HGDFall2023
+{
     [RequireComponent(typeof(RelativeJoint2D))]
     public class JointPopper : MonoBehaviour
     {
