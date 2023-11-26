@@ -5,28 +5,27 @@ namespace HGDFall2023
     public class PlayerBlower : MonoBehaviour
     {
         // TODO: implement multiple mics
-        public new Camera camera;
         public GameObject player;
         public float force;
         public float cooldown;
 
-        private AudioClip micClip;
-        private readonly float[] samples = new float[4410];
+        //private AudioClip micClip;
+        //private readonly float[] samples = new float[4410];
         private float lastWhoosh;
 
         private void Start()
         {
-            // Make sure I have permission to use the microphone
-            AsyncOperation op = Application.RequestUserAuthorization(
-                UserAuthorization.Microphone
-            );
+            //// Make sure I have permission to use the microphone
+            //AsyncOperation op = Application.RequestUserAuthorization(
+            //    UserAuthorization.Microphone
+            //);
 
-            op.completed += (_) =>
-            {
-                micClip = Microphone.Start(
-                    null, true, 1, 44100
-                );
-            };
+            //op.completed += (_) =>
+            //{
+            //    micClip = Microphone.Start(
+            //        null, true, 1, 44100
+            //    );
+            //};
         }
 
         private void Update()
@@ -34,43 +33,46 @@ namespace HGDFall2023
             // Set the position of the blower to the mouse position
             // Vector 2 cast causes unity to disregard the z value
             transform.position = 
-                (Vector2)camera.ScreenToWorldPoint(Input.mousePosition);
+                (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
             // Point blower at player
-            Vector3 playerDirection
+            Vector3 direction
                 = (player.transform.position - transform.position).normalized;
-            transform.right = playerDirection;
+            transform.eulerAngles = new Vector3(0, 0, 
+                Mathf.Rad2Deg * Mathf.Atan2(direction.y, direction.x)
+            );
             
-            if (micClip == null || Time.time - lastWhoosh < cooldown) 
+            if (Time.time - lastWhoosh < cooldown || !Input.GetMouseButtonDown(0))// || micClip == null)
             {
                 return;
             }
 
             // Get data to calculate rolling average
             // Ensure position is never negative
-            int position = Microphone.GetPosition(null) - (samples.Length / 2);
-            if (position < 0)
-            {
-                position = micClip.samples + position;
-            }
-            micClip.GetData(samples, position);
+            //int position = Microphone.GetPosition(null) - (samples.Length / 2);
+            //if (position < 0)
+            //{
+            //    position = micClip.samples + position;
+            //}
+            //micClip.GetData(samples, position);
 
-            // Don't use linq for better performance
-            double total = 0;
-            for (int i = 0; i < samples.Length; i++)
-            {
-                total += Mathf.Abs(samples[i]);
-            }
-            float average = (float)(total / samples.Length);
+            //// Don't use linq for better performance
+            //double total = 0;
+            //for (int i = 0; i < samples.Length; i++)
+            //{
+            //    total += Mathf.Abs(samples[i]);
+            //}
+            //float average = (float)(total / samples.Length);
 
-            // TODO: Add activation force
-            if (average < 0.2)
-            {
-                return;
-            }
+            //// TODO: Add activation force
+            //if (average < 0.2)
+            //{
+            //    return;
+            //}
+            float average = 1;
 
             // Raycast for player
             RaycastHit2D hit = Physics2D.Raycast(
-                transform.position, playerDirection, 2, 1 << 3
+                transform.position, direction, 4, 1 << 3
             );
 
             if (hit.rigidbody == null)
@@ -79,8 +81,11 @@ namespace HGDFall2023
             }
 
             lastWhoosh = Time.time;
-            hit.rigidbody.AddForce(average * force * playerDirection);
-            Debug.Log($"whoosh {average * force * playerDirection}");
+            // Linear falloff (y = mx + b)
+            float falloff = (-0.25f * hit.distance) + 1;
+            Debug.Log(falloff);
+            hit.rigidbody.AddForce(falloff * average * force * direction);
+            Debug.Log($"whoosh {falloff * average * force * direction}");
         }
 
         private void OnDestroy()

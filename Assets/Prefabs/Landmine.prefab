@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cc4750974b208646b3d20b71d9da765, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 10000
+  force: 100
   animator: {fileID: 5842721126216266310}
 --- !u!60 &2307992365317144054
 PolygonCollider2D:

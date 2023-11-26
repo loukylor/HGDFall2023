@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace HGDFall2023
 {
@@ -51,7 +50,7 @@ namespace HGDFall2023
 
         public void LoadLevel(int level)
         {
-            SceneManager.LoadScene($"Level{level}");
+            GameManager.LoadLevel(level);
         }
     }
 }

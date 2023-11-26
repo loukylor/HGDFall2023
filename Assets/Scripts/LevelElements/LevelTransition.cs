@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace HGDFall2023.LevelElements
 {
@@ -9,8 +8,7 @@ namespace HGDFall2023.LevelElements
 
         protected override void OnPlayerTrigger(Collider2D _)
         {
-            Debug.Log("pp");
-            SceneManager.LoadScene(nextLevelSceneName);
+            GameManager.LoadLevel(nextLevelSceneName);
         }
     }
 }

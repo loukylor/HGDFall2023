@@ -9,20 +9,6 @@ namespace HGDFall2023.LevelElements
 
         protected override void OnPlayerCollision(Collision2D collision)
         {
-            // Get root parent
-            Transform parent = collision.transform;
-            while (parent.parent != null)
-            {
-                parent = parent.parent;
-            }
-
-            // Check if root parent has the player tag
-            if (!parent.CompareTag("Player"))
-            {
-                // If it's not the player, then return
-                return;
-            }
-
             // TODO: Add explosion sound
             // Start explosion animation
             animator.enabled = true;
