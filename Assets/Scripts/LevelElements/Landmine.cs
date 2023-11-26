@@ -1,14 +1,13 @@
 using UnityEngine;
 
-namespace HGDFall2023
+namespace HGDFall2023.LevelElements
 {
-    [RequireComponent(typeof(Collider2D))]
-    public class Landmine : MonoBehaviour
+    public class Landmine : ElementBase
     {
         public float force = 10000;
         public Animator animator;
 
-        private void OnCollisionEnter2D(Collision2D collision)
+        protected override void OnPlayerCollision(Collision2D collision)
         {
             // Get root parent
             Transform parent = collision.transform;
