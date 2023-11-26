@@ -22,7 +22,7 @@ namespace HGDFall2023
 
             if (acceleration.magnitude > maxAcceleration)
             {
-                gameObject.SetActive(false);
+                GameManager.Instance.KillPlayer();
             }
         }
     }

@@ -8,7 +8,7 @@ namespace HGDFall2023.LevelElements
 
         protected override void OnPlayerTriggerStay(Collider2D collision)
         {
-            collision.attachedRigidbody.AddForce(force);
+            collision.attachedRigidbody.AddForce(force * Time.fixedDeltaTime);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -41,6 +42,8 @@ namespace HGDFall2023
             Instance.IsPaused = true;
             Time.timeScale = 0;
             Instance.transform.Find("Pause Menu").gameObject.SetActive(true);
+            Instance.transform.Find("Pause Menu/Canvas/Buttons/Resume")
+                .gameObject.SetActive(true);
         }
 
         public void Unpause()
@@ -48,6 +51,27 @@ namespace HGDFall2023
             Instance.IsPaused = false;
             Time.timeScale = 1;
             transform.Find("Pause Menu").gameObject.SetActive(false);
+        }
+
+        public void KillPlayer()
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            player.SetActive(false);
+            StartCoroutine(OpenMenuCoroutine());
+        }
+
+        public void OpenDeathMenu()
+        {
+            Instance.transform.Find("Pause Menu").gameObject.SetActive(true);
+            Instance.transform.Find("Pause Menu/Canvas/Buttons/Resume")
+                .gameObject.SetActive(false);
+        }
+
+        private IEnumerator OpenMenuCoroutine()
+        {
+            yield return new WaitForSeconds(2);
+
+            OpenDeathMenu();
         }
 
         private void Update()
