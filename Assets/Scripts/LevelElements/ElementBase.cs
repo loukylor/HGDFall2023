@@ -25,8 +25,19 @@ namespace HGDFall2023.LevelElements
             OnPlayerCollisionStay(collision);
         }
 
+        private void OnCollisionExit2D(Collision2D collision)
+        {
+            if (!IsPlayer(collision.gameObject))
+            {
+                return;
+            }
+
+            OnPlayerCollisionExit(collision);
+        }
+
         protected virtual void OnPlayerCollision(Collision2D collision) { }
         protected virtual void OnPlayerCollisionStay(Collision2D collision) { }
+        protected virtual void OnPlayerCollisionExit(Collision2D collision) { }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
@@ -48,8 +59,19 @@ namespace HGDFall2023.LevelElements
             OnPlayerTriggerStay(collision);
         }
 
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (!IsPlayer(collision.gameObject))
+            {
+                return;
+            }
+
+            OnPlayerTriggerExit(collision);
+        }
+
         protected virtual void OnPlayerTrigger(Collider2D collision) { }
         protected virtual void OnPlayerTriggerStay(Collider2D collision) { }
+        protected virtual void OnPlayerTriggerExit(Collider2D collision) { }
 
         protected bool IsPlayer(GameObject go)
         {

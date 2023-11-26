@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6db9161bfa28bbd448a68b43eb275b88
+guid: 9dfa18d7dba8c514a9af161a8bffb9b6
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,12 +43,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 180
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -121,7 +121,49 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Blower_0
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 302
+        width: 140
+        height: 87
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2840e4bc112258c41859e1830c51acf7
+      internalID: 1266998646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Blower_1
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 149
+        width: 418
+        height: 97
+      alignment: 9
+      pivot: {x: 0.1674641, y: 0.48453608}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8fb07e7ff26bfa143be20b7aa5879d77
+      internalID: 407693378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -132,7 +174,11 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Blower_0: 1266998646
+      Blower_1: 407693378
+      Blower_2: -1688368886
+      Blower_3: -1385651651
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
