@@ -50,7 +50,7 @@ namespace HGDFall2023
 
         public void LoadLevel(int level)
         {
-            GameManager.LoadLevel(level);
+            GameManager.Instance.LoadLevel(level);
         }
     }
 }

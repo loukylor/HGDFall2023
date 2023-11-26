@@ -8,7 +8,7 @@ namespace HGDFall2023.LevelElements
 
         protected override void OnPlayerTrigger(Collider2D _)
         {
-            GameManager.LoadLevel(nextLevelSceneName);
+            GameManager.Instance.LoadLevel(nextLevelSceneName);
         }
     }
 }

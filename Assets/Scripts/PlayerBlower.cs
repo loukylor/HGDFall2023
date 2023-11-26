@@ -41,7 +41,9 @@ namespace HGDFall2023
                 Mathf.Rad2Deg * Mathf.Atan2(direction.y, direction.x)
             );
             
-            if (Time.time - lastWhoosh < cooldown || !Input.GetMouseButtonDown(0))// || micClip == null)
+            if (Time.time - lastWhoosh < cooldown 
+                || !Input.GetMouseButtonDown(0)
+                || GameManager.Instance.IsPaused)// || micClip == null)
             {
                 return;
             }
