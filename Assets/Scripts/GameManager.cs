@@ -32,6 +32,13 @@ namespace HGDFall2023
             SceneManager.LoadScene(level);
         }
 
+        public void LoadNextLevel()
+        {
+            SceneManager.LoadScene(
+                SceneManager.GetActiveScene().buildIndex + 1
+            );
+        }
+
         public void ResetLevel()
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -44,6 +51,8 @@ namespace HGDFall2023
             Instance.transform.Find("Pause Menu").gameObject.SetActive(true);
             Instance.transform.Find("Pause Menu/Canvas/Buttons/Resume")
                 .gameObject.SetActive(true);
+            Instance.transform.Find("Pause Menu/Canvas/Buttons/Continue")
+                .gameObject.SetActive(false);
         }
 
         public void Unpause()
@@ -62,9 +71,22 @@ namespace HGDFall2023
 
         public void OpenDeathMenu()
         {
+            Time.timeScale = 0;
             Instance.transform.Find("Pause Menu").gameObject.SetActive(true);
             Instance.transform.Find("Pause Menu/Canvas/Buttons/Resume")
                 .gameObject.SetActive(false);
+            Instance.transform.Find("Pause Menu/Canvas/Buttons/Continue")
+                .gameObject.SetActive(false);
+        }
+
+        public void OpenFinishMenu()
+        {
+            Time.timeScale = 0;
+            Instance.transform.Find("Pause Menu").gameObject.SetActive(true);
+            Instance.transform.Find("Pause Menu/Canvas/Buttons/Resume")
+                .gameObject.SetActive(false);
+            Instance.transform.Find("Pause Menu/Canvas/Buttons/Continue")
+                .gameObject.SetActive(true);
         }
 
         private IEnumerator OpenMenuCoroutine()
