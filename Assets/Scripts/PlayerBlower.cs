@@ -8,10 +8,13 @@ namespace HGDFall2023
         public GameObject player;
         public float force;
         public float cooldown;
+        public Sprite initialSprite;
+        public Sprite blowSprite;
 
         //private AudioClip micClip;
         //private readonly float[] samples = new float[4410];
         private float lastWhoosh;
+        private new SpriteRenderer renderer;
 
         private void Start()
         {
@@ -26,6 +29,7 @@ namespace HGDFall2023
             //        null, true, 1, 44100
             //    );
             //};
+            renderer = GetComponent<SpriteRenderer>();
         }
 
         private void Update()
@@ -41,8 +45,14 @@ namespace HGDFall2023
                 Mathf.Rad2Deg * Mathf.Atan2(direction.y, direction.x)
             );
             
-            if (Time.time - lastWhoosh < cooldown 
-                || !Input.GetMouseButtonDown(0)
+            if (Time.time - lastWhoosh < cooldown)
+            {
+                return;
+            }
+
+            renderer.sprite = initialSprite;
+
+            if (!Input.GetMouseButtonDown(0)
                 || GameManager.Instance.IsPaused)// || micClip == null)
             {
                 return;
@@ -88,6 +98,7 @@ namespace HGDFall2023
             Debug.Log(falloff);
             hit.rigidbody.AddForce(falloff * average * force * direction);
             Debug.Log($"whoosh {falloff * average * force * direction}");
+            renderer.sprite = blowSprite;
         }
 
         private void OnDestroy()
