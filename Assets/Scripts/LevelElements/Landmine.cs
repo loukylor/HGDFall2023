@@ -17,7 +17,6 @@ namespace HGDFall2023.LevelElements
             collision.rigidbody.AddForce(
                 collision.GetContact(0).normal * -force
             );
-            Debug.Log(collision.GetContact(0).normal);
         }
 
         // This will be called by the animator, and shouldn't be called manually
