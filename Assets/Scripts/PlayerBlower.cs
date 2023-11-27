@@ -4,31 +4,17 @@ namespace HGDFall2023
 {
     public class PlayerBlower : MonoBehaviour
     {
-        // TODO: implement multiple mics
         public GameObject player;
         public float force;
         public float cooldown;
         public Sprite initialSprite;
         public Sprite blowSprite;
 
-        //private AudioClip micClip;
-        //private readonly float[] samples = new float[4410];
         private float lastWhoosh;
         private new SpriteRenderer renderer;
 
         private void Start()
         {
-            //// Make sure I have permission to use the microphone
-            //AsyncOperation op = Application.RequestUserAuthorization(
-            //    UserAuthorization.Microphone
-            //);
-
-            //op.completed += (_) =>
-            //{
-            //    micClip = Microphone.Start(
-            //        null, true, 1, 44100
-            //    );
-            //};
             renderer = GetComponent<SpriteRenderer>();
         }
 
@@ -58,28 +44,6 @@ namespace HGDFall2023
                 return;
             }
 
-            // Get data to calculate rolling average
-            // Ensure position is never negative
-            //int position = Microphone.GetPosition(null) - (samples.Length / 2);
-            //if (position < 0)
-            //{
-            //    position = micClip.samples + position;
-            //}
-            //micClip.GetData(samples, position);
-
-            //// Don't use linq for better performance
-            //double total = 0;
-            //for (int i = 0; i < samples.Length; i++)
-            //{
-            //    total += Mathf.Abs(samples[i]);
-            //}
-            //float average = (float)(total / samples.Length);
-
-            //// TODO: Add activation force
-            //if (average < 0.2)
-            //{
-            //    return;
-            //}
             float average = 1;
 
             // Raycast for player
@@ -99,11 +63,6 @@ namespace HGDFall2023
             hit.rigidbody.AddForce(falloff * average * force * direction);
             Debug.Log($"whoosh {falloff * average * force * direction}");
             renderer.sprite = blowSprite;
-        }
-
-        private void OnDestroy()
-        {
-            Microphone.End(null);
         }
     }
 }
