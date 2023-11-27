@@ -13,10 +13,8 @@ namespace HGDFall2023.LevelElements
             // Start explosion animation
             animator.enabled = true;
 
-            // Add force in direction of explosion
-            collision.rigidbody.AddForce(
-                collision.GetContact(0).normal * -force
-            );
+            // Kill player
+            GameManager.Instance.KillPlayer();
         }
 
         // This will be called by the animator, and shouldn't be called manually

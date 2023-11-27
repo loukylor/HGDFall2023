@@ -18,8 +18,13 @@ namespace HGDFall2023
             }
 
             Instance = this;
-            SceneManager.sceneUnloaded += (_) => Unpause();
+            SceneManager.sceneUnloaded += (_) =>
+            {
+                StopAllCoroutines();
+                Unpause();
+            };
             DontDestroyOnLoad(this);
+            LoadLevel("Menu");
         }
 
         public void LoadLevel(int level)
@@ -71,6 +76,7 @@ namespace HGDFall2023
 
         public void OpenDeathMenu()
         {
+            IsPaused = true;
             Time.timeScale = 0;
             Instance.transform.Find("Pause Menu").gameObject.SetActive(true);
             Instance.transform.Find("Pause Menu/Canvas/Buttons/Resume")
@@ -81,6 +87,7 @@ namespace HGDFall2023
 
         public void OpenFinishMenu()
         {
+            IsPaused = true;
             Time.timeScale = 0;
             Instance.transform.Find("Pause Menu").gameObject.SetActive(true);
             Instance.transform.Find("Pause Menu/Canvas/Buttons/Resume")
