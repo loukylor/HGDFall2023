@@ -8,6 +8,11 @@ namespace HGDFall2023.LevelElements
 
         public Vector3 force;
 
+        private void Update()
+        {
+            GameManager.Instance.PlaySound("fan", true, 0.5f);
+        }
+
         protected override void OnPlayerTriggerStay(Collider2D collision)
         {
             // Prevent multiple pushers from pushing

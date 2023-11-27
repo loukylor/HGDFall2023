@@ -15,6 +15,7 @@ namespace HGDFall2023.LevelElements
 
             // Kill player
             GameManager.Instance.KillPlayer();
+            GameManager.Instance.PlaySound("Explosion", false, 1.0f);
         }
 
         // This will be called by the animator, and shouldn't be called manually

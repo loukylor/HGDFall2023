@@ -63,6 +63,7 @@ namespace HGDFall2023
             hit.rigidbody.AddForce(falloff * average * force * direction);
             Debug.Log($"whoosh {falloff * average * force * direction}");
             renderer.sprite = blowSprite;
+            GameManager.Instance.PlaySound("puff", false, 1.0f);
         }
     }
 }

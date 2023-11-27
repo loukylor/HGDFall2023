@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace HGDFall2023
 {
@@ -23,6 +24,27 @@ namespace HGDFall2023
             // Add new to page stack and show it
             pageStack.Push(transform.Find(gameMenu).gameObject);
             pageStack.Peek().SetActive(true);
+
+            if (gameMenu == "LevelSelect")
+            {
+                Transform buttons = transform.Find("LevelSelect/Buttons/Levels");
+                foreach (Transform child in buttons)
+                {
+                    Button button = child.GetComponent<Button>();
+                    if (button == null)
+                    {
+                        continue;
+                    }
+
+                    int level = int.Parse(child.name);
+                    if (GameManager.Instance.HasUnlockedLevel(level))
+                    {
+                        continue;
+                    }
+
+                    button.interactable = false;
+                }
+            }
         }
 
         public void Back()

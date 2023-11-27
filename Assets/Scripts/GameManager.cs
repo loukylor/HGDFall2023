@@ -1,4 +1,7 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +12,9 @@ namespace HGDFall2023
         public static GameManager Instance { get; private set; }
         
         public bool IsPaused { get; private set; } = false;
+        public AudioClip[] clips = new AudioClip[0];
+
+        private readonly HashSet<string> sounds = new();
      
         private void Awake()
         {
@@ -22,19 +28,25 @@ namespace HGDFall2023
             {
                 StopAllCoroutines();
                 Unpause();
+
+                foreach (AudioSource source in GetComponents<AudioSource>())
+                {
+                    Destroy(source);
+                }
+                sounds.Clear();
             };
             DontDestroyOnLoad(this);
-            LoadLevel("Menu");
+            LoadMenu();
         }
 
         public void LoadLevel(int level)
         {
-            LoadLevel($"Level{level}");
+            SceneManager.LoadScene($"Level{level}");
         }
 
-        public void LoadLevel(string level)
+        public void LoadMenu()
         {
-            SceneManager.LoadScene(level);
+            SceneManager.LoadScene("Menu");
         }
 
         public void LoadNextLevel()
@@ -42,6 +54,23 @@ namespace HGDFall2023
             SceneManager.LoadScene(
                 SceneManager.GetActiveScene().buildIndex + 1
             );
+        }
+
+        public bool HasUnlockedLevel(int level)
+        {
+            if (level == 1)
+            {
+                return true;
+            }
+            else
+            {
+                // Decrement because you unlock the level after the latest level
+                // you've played
+                level--;
+            }
+
+            return PlayerPrefs.GetString("levels").Split(',')
+                .ToHashSet().Contains(level.ToString());
         }
 
         public void ResetLevel()
@@ -71,7 +100,7 @@ namespace HGDFall2023
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             player.SetActive(false);
-            StartCoroutine(OpenMenuCoroutine());
+            StartCoroutine(WaitSeconds(1, OpenDeathMenu));
         }
 
         public void OpenDeathMenu()
@@ -94,13 +123,48 @@ namespace HGDFall2023
                 .gameObject.SetActive(false);
             Instance.transform.Find("Pause Menu/Canvas/Buttons/Continue")
                 .gameObject.SetActive(true);
+
+            // Add to completed levels
+            HashSet<string> levels =
+            PlayerPrefs.GetString("levels").Split(',').ToHashSet();
+            levels.Add(
+                (SceneManager.GetActiveScene().buildIndex - 1).ToString()
+            );
+            PlayerPrefs.SetString("levels", string.Join(",", levels));
         }
 
-        private IEnumerator OpenMenuCoroutine()
+        public void PlaySound(string name, bool loop, float volume)
         {
-            yield return new WaitForSeconds(2);
+            if (!sounds.Add(name))
+            {
+                return;
+            }
+            AudioSource source = gameObject.AddComponent<AudioSource>();
+            source.volume = volume;
+            AudioClip clip = clips.First((clip) => clip.name == name);
+            source.clip = clip;
+            source.Play();
 
-            OpenDeathMenu();
+            // Loop forever if loop is on
+            if (!loop)
+            {
+                StartCoroutine(WaitSeconds(clip.length, () =>
+                {
+                    sounds.Remove(name);
+                    Destroy(source);
+                }));
+            } 
+            else
+            {
+                source.loop = true;
+            }
+        }
+
+        private IEnumerator WaitSeconds(float seconds, Action callback)
+        {
+            yield return new WaitForSeconds(seconds);
+
+            callback();
         }
 
         private void Update()
